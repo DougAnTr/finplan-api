@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 
 import http from 'http';
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
-import { schema } from './graphql';
+import schema from './graphql';
 
 async function listen(port: number) {
   const app = express();

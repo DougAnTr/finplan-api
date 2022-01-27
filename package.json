@@ -9,6 +9,7 @@
     "dev": "tsc-watch --onSuccess \"yarn watch\""
   },
   "dependencies": {
+    "@graphql-tools/schema": "^8.3.1",
     "apollo-server-core": "^3.6.1",
     "apollo-server-express": "^3.6.1",
     "express": "^4.17.2",
