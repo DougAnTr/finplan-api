@@ -7,7 +7,7 @@ export default class MonthController {
   }
 
   list = async () => {
-    return this.monthModel.find();
+    return this.monthModel.find().sort({year: 1, number: 1});
   }
 
   create = async (_: undefined, {input}: CreateMonth): Promise<Month> => {
