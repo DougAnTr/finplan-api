@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: dockerfile-dev
+    ports:
+      - 4000:4000
+    depends_on:
+      - db
+    container_name: finplan-api
+    restart: always
+    command: yarn dev
+    volumes:
+      - ./src:/app/src
+
+  db:
+    image: mongo
+    ports:
+      - 27017:27017
+    container_name: finplan-db

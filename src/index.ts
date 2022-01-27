@@ -10,7 +10,7 @@ async function listen(port: number) {
   const app = express();
   const httpServer = http.createServer(app)
 
-  await mongoose.connect('mongodb://localhost:27017/finplan-db')
+  await mongoose.connect('mongodb://finplan-db:27017/finplan')
 
   const server = new ApolloServer({
     schema,
