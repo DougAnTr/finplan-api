@@ -4,13 +4,14 @@ import mongoose from 'mongoose';
 
 import http from 'http';
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
-import schema from './graphql';
+import { createSchema } from './modules';
 
 async function listen(port: number) {
   const app = express();
   const httpServer = http.createServer(app)
 
   await mongoose.connect('mongodb://finplan-db:27017/finplan')
+  const schema = await createSchema();
 
   const server = new ApolloServer({
     schema,
