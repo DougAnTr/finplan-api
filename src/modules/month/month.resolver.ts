@@ -1,26 +1,31 @@
-import "reflect-metadata";
-import { UserInputError } from "apollo-server-core";
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
-import { AddMonthInput, Month } from "./month.types";
-import { monthModel } from "./month.model";
+import 'reflect-metadata'
+import { UserInputError } from 'apollo-server-core'
+import { Arg, Mutation, Query, Resolver } from 'type-graphql'
+import { AddMonthInput, Month } from './month.model'
+import { Service } from 'typedi'
+import { MonthService } from './month.service'
 
+@Service()
 @Resolver(Month)
 export class MonthResolver {
-  constructor(){}
+  constructor(private readonly monthService: MonthService){}
 
-  @Query(returns => [Month])
+  @Query(() => [Month])
   async months() {
-    return monthModel.find().sort({year: 1, number: 1});
+    return this.monthService.getAll()
   }
 
-  @Mutation(returns => Month)
-  async addMonth(@Arg('data') newMonthData: AddMonthInput): Promise<Month>{
-    const monthExists = await monthModel.findOne({number: newMonthData.number, year: newMonthData.year});
+  @Mutation(() => Month)
+  async addMonth(@Arg('data') newMonthData: AddMonthInput): Promise<Month> {
+    
 
-    if(monthExists) {
+    if (await this.monthService.getOne({
+      number: newMonthData.number,
+      year: newMonthData.year,
+    })) {
       throw new UserInputError('you cannot create duplicated months.')
     }
 
-    return monthModel.create(newMonthData);
+    return this.monthService.create(newMonthData)
   }
 }

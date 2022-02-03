@@ -1,9 +1,28 @@
-import mongoose from "mongoose";
-import { Month } from "./month.types";
+import { getModelForClass, prop } from "@typegoose/typegoose";
+import "reflect-metadata";
+import { Field, ID, InputType, ObjectType } from "type-graphql";
 
-const monthSchema = new mongoose.Schema<Month>({
-  number: Number,
-  year: Number
-})
+@ObjectType()
+export class Month {
+  @Field(type => ID)
+  id: string;
 
-export const monthModel = mongoose.model<Month>('Month', monthSchema);
+  @prop()
+  @Field({description: 'The number of the month following js pattern from 0 to 11'})
+  number: number;
+
+  @prop()
+  @Field()
+  year: number;
+}
+
+@InputType()
+export class AddMonthInput implements Partial<Month>{
+  @Field({description: 'The number of the month following js pattern from 0 to 11'})
+  number: number;
+
+  @Field()
+  year: number;
+}
+
+export const MonthModel = getModelForClass(Month)
