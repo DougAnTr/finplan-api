@@ -1,28 +1,28 @@
-import { getModelForClass, prop } from "@typegoose/typegoose";
-import "reflect-metadata";
-import { Field, ID, InputType, ObjectType } from "type-graphql";
+import { getModelForClass, prop } from '@typegoose/typegoose'
+import 'reflect-metadata'
+import { Field, ID, InputType, ObjectType } from 'type-graphql'
 
 @ObjectType()
 export class Month {
-  @Field(type => ID)
-  id: string;
+  @Field(() => ID)
+    id: string
 
   @prop()
   @Field({description: 'The number of the month following js pattern from 0 to 11'})
-  number: number;
+    number: number
 
   @prop()
   @Field()
-  year: number;
+    year: number
 }
 
 @InputType()
 export class AddMonthInput implements Partial<Month>{
   @Field({description: 'The number of the month following js pattern from 0 to 11'})
-  number: number;
+    number: number
 
   @Field()
-  year: number;
+    year: number
 }
 
 export const MonthModel = getModelForClass(Month)
