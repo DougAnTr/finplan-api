@@ -12,7 +12,6 @@ const makeSut = () => {
 
 describe('Month Service', () => {
 
-
   beforeAll(async() => {
     await mongoose.connect(`mongodb://localhost:${constants.database.port}/${constants.database.name}`)
   })
