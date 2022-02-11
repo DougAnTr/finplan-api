@@ -1,17 +1,18 @@
 import { ApolloServer } from 'apollo-server-express'
-import express from 'express';
-import mongoose from 'mongoose';
+import express from 'express'
 
-import http from 'http';
-import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
-import { createSchema } from './modules';
+import http from 'http'
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
+import { createSchema } from './modules'
+import { constants } from './config/constants'
+import { connect } from './config/mongodbConnection'
 
 async function listen(port: number) {
-  const app = express();
+  const app = express()
   const httpServer = http.createServer(app)
 
-  await mongoose.connect('mongodb://finplan-db:27017/finplan')
-  const schema = await createSchema();
+  await connect()
+  const schema = await createSchema()
 
   const server = new ApolloServer({
     schema,
@@ -29,9 +30,9 @@ async function listen(port: number) {
 
 async function main() {
   try {
-    const port = 4000
-    await listen(port)
-    console.log(`🚀 Server is ready at http://localhost:${port}/graphql`)
+
+    await listen(constants.application.port)
+    console.info(`🚀 Server is ready at ${constants.application.url}:${constants.application.port}/graphql`)
   } catch (err) {
     console.error('💀 Error starting the node server', err)
   }
