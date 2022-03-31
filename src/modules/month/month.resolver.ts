@@ -3,29 +3,33 @@ import { UserInputError } from 'apollo-server-core'
 import { Arg, Mutation, Query, Resolver } from 'type-graphql'
 import { AddMonthInput, Month } from './month.model'
 import { Service } from 'typedi'
-import { MonthService } from './month.service'
+import { CreateMonthService, FindMonthService, ListMonthService } from './services'
 
 @Service()
 @Resolver(Month)
 export class MonthResolver {
-  constructor(private readonly monthService: MonthService){}
+  constructor(
+    private readonly listMonthService: ListMonthService,
+    private readonly findMonthService: FindMonthService,
+    private readonly createMonthService: CreateMonthService
+  ){}
 
   @Query(() => [Month])
   async months() {
-    return this.monthService.getAll()
+    return this.listMonthService.execute()
   }
 
   @Mutation(() => Month)
   async addMonth(@Arg('data') newMonthData: AddMonthInput): Promise<Month> {
     
 
-    if (await this.monthService.getOne({
+    if (await this.findMonthService.execute({
       number: newMonthData.number,
       year: newMonthData.year,
     })) {
       throw new UserInputError('you cannot create duplicated months.')
     }
 
-    return this.monthService.create(newMonthData)
+    return this.createMonthService.execute(newMonthData)
   }
 }
