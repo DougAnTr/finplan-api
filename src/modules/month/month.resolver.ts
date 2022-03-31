@@ -21,7 +21,6 @@ export class MonthResolver {
 
   @Mutation(() => Month)
   async addMonth(@Arg('data') newMonthData: AddMonthInput): Promise<Month> {
-    
 
     if (await this.findMonthService.execute({
       number: newMonthData.number,
