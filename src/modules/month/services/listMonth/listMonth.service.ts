@@ -1,6 +1,8 @@
 import { ModelType } from '@typegoose/typegoose/lib/types'
+import { Service } from 'typedi'
 import { Month } from '../../month.model'
 
+@Service()
 export class ListMonthService {
   constructor(private monthModel: ModelType<Month>){}
 
