@@ -1,7 +1,5 @@
 type Database = {
-  host: string;
-  port: string;
-  name: string;
+  mongo_url: string;
 }
 
 type Application = {

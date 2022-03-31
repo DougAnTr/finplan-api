@@ -1,6 +1,6 @@
 import { mongoose } from '@typegoose/typegoose'
 
-import { constants } from '../../config/constants'
+import { connect } from '../../config/mongodbConnection'
 
 import { MonthService } from './month.service'
 
@@ -13,7 +13,7 @@ const makeSut = () => {
 describe('Month Service', () => {
 
   beforeAll(async() => {
-    await mongoose.connect(`mongodb://localhost:${constants.database.port}/${constants.database.name}`)
+    await connect()
   })
 
   afterAll(async() => {
