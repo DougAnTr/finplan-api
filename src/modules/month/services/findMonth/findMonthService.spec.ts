@@ -1,19 +1,20 @@
 import { connect, disconnect } from '../../../../config/mongodbConnection'
-import {  MonthModel } from '../../month.model'
-import { ListMonthService } from './listMonth.service'
+import { MonthModel } from '../../month.model'
+import { FindMonthService } from './findMonth.service'
 
 const makeSut = () => {
-  const sut = new ListMonthService(MonthModel)
+  const sut = new FindMonthService(MonthModel)
 
   return {sut}
 }
 
-describe('ListMonthService', () => {
+describe('FindMonthService', () => {
 
   beforeAll(async() => {
     await connect()
 
     await MonthModel.create({
+      id: 'monthId',
       number: 0,
       year: 2023
     })
@@ -25,11 +26,11 @@ describe('ListMonthService', () => {
   })
 
 
-  it('should return the all months', async () => {
+  it('should return a month by the selected id', async () => {
     const {sut} = makeSut()
 
-    const months = await sut.execute()
+    const months = await sut.execute({id: 'monthId'})
 
-    expect(months.length).toBeGreaterThan(0)
+    expect(months).toBeTruthy()
   })
 })
