@@ -18,6 +18,7 @@ describe('CreateMonthService', () => {
   })
 
   afterAll(async() => {
+    await MonthModel.deleteMany()
     await disconnect()
   })
 
