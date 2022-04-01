@@ -3,7 +3,6 @@ import { MonthModel } from '../../month.model'
 import { CreateMonthService } from './createMonth.service'
 
 const makeSut = () => {
-
   const sut = new CreateMonthService(MonthModel)
 
   return {sut}

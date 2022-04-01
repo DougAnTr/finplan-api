@@ -20,7 +20,7 @@ export class Transaction {
     description: string
 
   @prop()
-  @Field({description: 'positive for income, negative for expense'})
+  @Field({description: 'positive for income, negative for expense | int values only'})
     amount: number
 
   @prop()
