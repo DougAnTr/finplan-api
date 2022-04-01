@@ -1,16 +1,14 @@
 import 'reflect-metadata'
-import { UserInputError } from 'apollo-server-core'
 import { Arg, Mutation, Query, Resolver } from 'type-graphql'
 import { CreateMonthInput, Month } from './month.model'
 import { Service } from 'typedi'
-import { CreateMonthService, FindMonthService, ListMonthService } from './services'
+import { CreateMonthService, ListMonthService } from './services'
 
 @Service()
 @Resolver(Month)
 export class MonthResolver {
   constructor(
     private readonly listMonthService: ListMonthService,
-    private readonly findMonthService: FindMonthService,
     private readonly createMonthService: CreateMonthService
   ){}
 

@@ -1,9 +1,6 @@
 import { connect, disconnect } from '../../../../config/mongodbConnection'
 import { MonthModel } from '../../month.model'
 import { CreateMonthService } from './createMonth.service'
-import {graphqlCaller} from '../../../../test-utils/graphql-caller'
-
-
 
 const makeSut = () => {
 
