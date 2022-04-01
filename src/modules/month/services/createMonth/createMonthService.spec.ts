@@ -1,6 +1,7 @@
 import { connect, disconnect } from '../../../../config/mongodbConnection'
 import { MonthModel } from '../../month.model'
 import { CreateMonthService } from './createMonth.service'
+import {graphqlCaller} from '../../../../test-utils/graphql-caller'
 
 
 
@@ -22,6 +23,17 @@ describe('CreateMonthService', () => {
     await disconnect()
   })
 
+  it('Throws an error if the month is already created', async () => {
+    const {sut} = makeSut()
+
+    const data = {
+      number: 0,
+      year: 2020
+    }
+    await MonthModel.create(data)
+
+    await expect(sut.execute(data)).rejects.toThrow('Month already exist')
+  })
 
   it('should return the created month', async () => {
     const {sut} = makeSut()

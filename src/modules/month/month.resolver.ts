@@ -21,14 +21,6 @@ export class MonthResolver {
 
   @Mutation(() => Month)
   async createMonth(@Arg('data') newMonthData: CreateMonthInput): Promise<Month> {
-
-    if (await this.findMonthService.execute({
-      number: newMonthData.number,
-      year: newMonthData.year,
-    })) {
-      throw new UserInputError('Month already exists')
-    }
-
     return this.createMonthService.execute(newMonthData)
   }
 }

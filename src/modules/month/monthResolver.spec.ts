@@ -37,18 +37,6 @@ describe('MonthResolver', () => {
       await MonthModel.deleteMany()
     })
 
-    it('Throws an error if the month is already created', async () => {
-      const data = {
-        number: 1,
-        year: 2020
-      }
-      await graphqlCaller({source: createMonthMutation, variableValues: {data}})
-      const createMonth = await graphqlCaller({source: createMonthMutation, variableValues: {data}})
-
-      const error = createMonth?.errors?.[0]
-      expect(error?.message).toEqual('Month already exists')
-    })
-
     it('Creates a month', async () => {
       const response = await graphqlCaller({
         source: createMonthMutation,
