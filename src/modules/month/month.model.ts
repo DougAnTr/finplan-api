@@ -17,7 +17,7 @@ export class Month {
 }
 
 @InputType()
-export class AddMonthInput implements Partial<Month>{
+export class CreateMonthInput implements Partial<Month>{
   @Field({description: 'The number of the month following js pattern from 0 to 11'})
     number: number
 

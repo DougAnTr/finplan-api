@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 import { UserInputError } from 'apollo-server-core'
 import { Arg, Mutation, Query, Resolver } from 'type-graphql'
-import { AddMonthInput, Month } from './month.model'
+import { CreateMonthInput, Month } from './month.model'
 import { Service } from 'typedi'
 import { CreateMonthService, FindMonthService, ListMonthService } from './services'
 
@@ -15,18 +15,18 @@ export class MonthResolver {
   ){}
 
   @Query(() => [Month])
-  async months() {
+  async listMonths() {
     return this.listMonthService.execute()
   }
 
   @Mutation(() => Month)
-  async addMonth(@Arg('data') newMonthData: AddMonthInput): Promise<Month> {
+  async createMonth(@Arg('data') newMonthData: CreateMonthInput): Promise<Month> {
 
     if (await this.findMonthService.execute({
       number: newMonthData.number,
       year: newMonthData.year,
     })) {
-      throw new UserInputError('you cannot create duplicated months.')
+      throw new UserInputError('Month already exists')
     }
 
     return this.createMonthService.execute(newMonthData)
