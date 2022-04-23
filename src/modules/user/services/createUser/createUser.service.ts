@@ -1,9 +1,14 @@
 import { User } from '../../user.model'
 import bcrypt from 'bcrypt'
 import { ModelType } from '@typegoose/typegoose/lib/types'
+import { Inject, Service } from 'typedi'
 
+@Service()
 export class CreateUserService {
-  constructor(private userModel: ModelType<User>) {}
+  constructor(
+    @Inject('UserModel')
+    private userModel: ModelType<User>
+  ) {}
 
   async execute(user: Partial<User>) {
     let password = ''
