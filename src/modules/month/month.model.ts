@@ -8,6 +8,10 @@ export class Month {
     id: string
 
   @prop()
+  @Field()
+    userId: string
+
+  @prop()
   @Field({description: 'The number of the month following js pattern from 0 to 11'})
     number: number
 
@@ -17,7 +21,10 @@ export class Month {
 }
 
 @InputType()
-export class CreateMonthInput implements Partial<Month>{
+export class CreateMonthInput {
+  @Field()
+    userId: string
+
   @Field({description: 'The number of the month following js pattern from 0 to 11'})
     number: number
 
