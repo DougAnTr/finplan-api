@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon -L",
     "build": "rimraf dist && tsc",
-    "test": "jest",
+    "test": "jest --noStackTrace --passWithNoTests --runInBand",
     "test:watch": "yarn test --watch"
   },
   "dependencies": {
