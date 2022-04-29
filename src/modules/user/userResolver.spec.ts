@@ -5,7 +5,7 @@ import { UserModel } from './user.model'
 const createUserMutation = `
   mutation CreateUser($data: CreateUserInput!) {
     createUser(data: $data) {
-      id
+      _id
     }
   }
 `
@@ -16,14 +16,11 @@ describe('UserResolver', () => {
   })
 
   afterAll(async () => {
+    await UserModel.deleteMany()
     await disconnect()
   })
 
   describe('createUser', () => {
-    afterEach(async () => {
-      await UserModel.deleteMany()
-    })
-
     it('Creates a user', async () => {
       const response = await graphqlCaller({
         source: createUserMutation,
@@ -37,7 +34,7 @@ describe('UserResolver', () => {
         },
       })
 
-      expect(response?.data?.createUser.id).toBeTruthy()
+      expect(response?.data?.createUser._id).toBeTruthy()
     })
   })
 })

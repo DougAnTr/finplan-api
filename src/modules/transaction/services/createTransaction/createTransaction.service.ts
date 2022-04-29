@@ -1,11 +1,16 @@
 import {Inject} from 'typedi'
 import {ModelType} from '@typegoose/typegoose/lib/types'
 import {Month} from '../../../month/month.model'
-import {Transaction, TransactionType} from '../../transaction.model'
+import {CreateTransactionInput, Transaction, TransactionType} from '../../transaction.model'
 import {UserInputError} from 'apollo-server-core'
+import { User } from '../../../user/user.model'
+import {Types} from 'mongoose'
 
 export class CreateTransactionService {
   constructor(
+    @Inject('UserModel')
+    private readonly userModel: ModelType<User>,
+
     @Inject('MonthModel')
     private readonly monthModel: ModelType<Month>,
 
@@ -14,8 +19,14 @@ export class CreateTransactionService {
   ) {
   }
 
-  async execute(transaction: Partial<Transaction>) {
-    const monthExists = await this.monthModel.findOne({id: transaction.monthId})
+  async execute(transaction: CreateTransactionInput) {
+    const userExists = await this.userModel.findById(transaction.userId)
+
+    if(!userExists){
+      throw new UserInputError('User not found')
+    }
+
+    const monthExists = await this.monthModel.findById(transaction.monthId)
 
     if(!monthExists) {
       throw new UserInputError('Month not found')

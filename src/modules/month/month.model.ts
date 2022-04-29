@@ -5,7 +5,7 @@ import { Field, ID, InputType, ObjectType } from 'type-graphql'
 @ObjectType()
 export class Month {
   @Field(() => ID)
-    id: string
+    _id: string
 
   @prop()
   @Field()

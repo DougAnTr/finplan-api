@@ -1,4 +1,4 @@
-import {Field, ID, ObjectType} from 'type-graphql'
+import {Field, ID, InputType, ObjectType} from 'type-graphql'
 import {getModelForClass, prop} from '@typegoose/typegoose'
 
 export enum TransactionType {
@@ -9,11 +9,15 @@ export enum TransactionType {
 @ObjectType()
 export class Transaction {
   @Field(() => ID)
-    id: string
+    _id: string
 
   @prop()
   @Field()
     monthId: string
+
+  @prop()
+  @Field()
+    userId: string
 
   @prop()
   @Field()
@@ -24,6 +28,24 @@ export class Transaction {
     amount: number
 
   @prop()
+  @Field()
+    type: TransactionType
+}
+
+@InputType()
+export class CreateTransactionInput {
+  @Field()
+    monthId: string
+
+  @Field()
+    userId: string
+
+  @Field()
+    description: string
+
+  @Field()
+    amount: number
+
   @Field()
     type: TransactionType
 }

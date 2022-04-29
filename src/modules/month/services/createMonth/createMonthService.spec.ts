@@ -2,6 +2,8 @@ import { connect, disconnect } from '../../../../config/mongodbConnection'
 import { UserModel, User } from '../../../user/user.model'
 import { MonthModel } from '../../month.model'
 import { CreateMonthService } from './createMonth.service'
+import {getUserMock} from '../../../user/user.mock'
+import {getMonthMock} from '../../month.mock'
 
 const makeSut = () => {
   const sut = new CreateMonthService(MonthModel, UserModel)
@@ -11,15 +13,11 @@ const makeSut = () => {
 
 describe('CreateMonthService', () => {
   let user: User
+  const invalid_userId = '626a6f47ed62e91252da3f03'
 
   beforeAll(async() => {
     await connect()
-    user = await UserModel.create({
-      name: 'User',
-      lastName: 'LastName',
-      email: 'email@mail.com',
-      password: 'password',
-    })
+    user = await UserModel.create(getUserMock())
   })
 
   afterAll(async() => {
@@ -31,11 +29,7 @@ describe('CreateMonthService', () => {
   it('Throws an error if the month is already created', async () => {
     const {sut} = makeSut()
 
-    const data = {
-      userId: user.id,
-      number: 0,
-      year: 2020
-    }
+    const data = getMonthMock(user._id)
     await MonthModel.create(data)
 
     await expect(sut.execute(data)).rejects.toThrow('Month already exist')
@@ -44,11 +38,7 @@ describe('CreateMonthService', () => {
   it('Throws an error if the user does not exist', async () => {
     const {sut} = makeSut()
 
-    const data = {
-      userId: '000000000000',
-      number: 0,
-      year: 2020
-    }
+    const data = getMonthMock(invalid_userId)
 
     await expect(sut.execute(data)).rejects.toThrow('User does not exist')
   })
@@ -56,11 +46,7 @@ describe('CreateMonthService', () => {
   it('Returns the created month', async () => {
     const {sut} = makeSut()
 
-    const testMonth = {
-      userId: user.id,
-      number: 0,
-      year: 2023
-    }
+    const testMonth = getMonthMock(user._id)
 
     const month = await sut.execute(testMonth)
 

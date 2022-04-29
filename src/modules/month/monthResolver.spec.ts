@@ -2,11 +2,13 @@ import {graphqlCaller} from '../../test-utils/graphql-caller'
 import {connect, disconnect} from '../../config/mongodbConnection'
 import {MonthModel} from './month.model'
 import { User, UserModel } from '../user/user.model'
+import {getUserMock} from '../user/user.mock'
+import {getMonthMock} from './month.mock'
 
 const createMonthMutation = `
   mutation CreateMonth($data: CreateMonthInput!) {
     createMonth(data: $data) {
-      id
+      _id
       number
       year
     }
@@ -16,7 +18,7 @@ const createMonthMutation = `
 const listMonthsQuery = `
   query {
     listMonths {
-      id
+      _id
       number
       year
     }
@@ -28,12 +30,7 @@ describe('MonthResolver', () => {
 
   beforeAll(async () => {
     await connect()
-    user = await UserModel.create({
-      name: 'User',
-      lastName: 'LastName',
-      email: 'email@mail.com',
-      password: 'password',
-    })
+    user = await UserModel.create(getUserMock())
   })
 
   afterAll(async () => {
@@ -43,7 +40,7 @@ describe('MonthResolver', () => {
   })
 
   describe('createMonth', () => {
-    afterEach(async () => {
+    afterAll(async () => {
       await MonthModel.deleteMany()
     })
 
@@ -51,26 +48,19 @@ describe('MonthResolver', () => {
       const response = await graphqlCaller({
         source: createMonthMutation,
         variableValues: {
-          data: {
-            userId: user.id,
-            number: 1,
-            year: 2020,
-          },
+          data: getMonthMock(user._id.toString()),
         },
       })
 
-      expect(response?.data?.createMonth.number).toBe(1)
+      console.log(response)
+      expect(response?.data?.createMonth).toBeTruthy()
     })
   })
 
   describe('list months', () => {
     beforeAll(async () => {
       for(let i = 0; i < 2; i++){
-        await MonthModel.create({
-          userId: user.id,
-          number: i,
-          year: 2020
-        })
+        await MonthModel.create(getMonthMock(user._id))
       }
     })
 
