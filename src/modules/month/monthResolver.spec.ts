@@ -1,4 +1,4 @@
-import {graphqlCaller} from '../../test-utils/graphql-caller'
+import {graphqlCaller} from '../../utils/test-utils/graphql-caller'
 import {connect, disconnect} from '../../config/mongodbConnection'
 import {MonthModel} from './month.model'
 import { User, UserModel } from '../user/user.model'

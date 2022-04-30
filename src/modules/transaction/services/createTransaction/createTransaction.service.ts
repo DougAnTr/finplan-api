@@ -4,7 +4,6 @@ import {Month} from '../../../month/month.model'
 import {CreateTransactionInput, Transaction, TransactionType} from '../../transaction.model'
 import {UserInputError} from 'apollo-server-core'
 import { User } from '../../../user/user.model'
-import {Types} from 'mongoose'
 
 export class CreateTransactionService {
   constructor(

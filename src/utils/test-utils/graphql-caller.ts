@@ -1,6 +1,6 @@
 import {Maybe} from 'type-graphql'
 import {graphql, GraphQLSchema} from 'graphql'
-import { createSchema } from '../modules'
+import { createSchema } from '../../modules'
 
 interface Options {
   source: string;
