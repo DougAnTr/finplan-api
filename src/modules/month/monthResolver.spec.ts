@@ -52,7 +52,6 @@ describe('MonthResolver', () => {
         },
       })
 
-      console.log(response)
       expect(response?.data?.createMonth).toBeTruthy()
     })
   })

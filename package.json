@@ -30,7 +30,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@faker-js/faker": "^6.2.0",
+    "@faker-js/faker": "^7.0.1",
     "@shelf/jest-mongodb": "^2.2.1",
     "@types/bcrypt": "^5.0.0",
     "@types/dotenv": "^8.2.0",

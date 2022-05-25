@@ -1,7 +1,7 @@
 import {TransactionType} from './transaction.model'
 import {faker} from '@faker-js/faker'
 
-export const getTransactionMock = (userId: string, monthId: string, type: TransactionType = faker.random.arrayElement(Object.values(TransactionType)), amount?: number) => ({
+export const getTransactionMock = (userId: string, monthId: string, type: TransactionType = faker.helpers.arrayElement(Object.values(TransactionType)), amount?: number) => ({
   userId,
   monthId,
   description: faker.random.word(),
